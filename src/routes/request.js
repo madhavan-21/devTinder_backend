@@ -63,7 +63,9 @@ requestRouter.post("/request/review/:status/:requestId",userAuth,async(req, res)
         );
         if (!connectionRequest){
             return res.status(400).json({message: "Request not found"})
-        }
+        }else if(connectionRequest.status === "accepted" || connectionRequest.status === "rejected"){
+            return res.status(400).json({message: `Request already ${connectionRequest.status}`})
+         }
 
         connectionRequest.status = status;
 
